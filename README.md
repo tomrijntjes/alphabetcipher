@@ -1,6 +1,8 @@
 # Alphabetcipher
 
-**TODO: Add description**
+This is an Elixir implementation of Lewis Carroll's 'unbreakable' [Alphabet Cipher](https://en.wikipedia.org/wiki/The_Alphabet_Cipher). A toy project for the purpose of learning Elixir.
+
+
 
 ## Installation
 
