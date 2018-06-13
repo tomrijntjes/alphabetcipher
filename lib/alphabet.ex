@@ -15,9 +15,8 @@ defmodule AlphabetUtils do
   """
   @alphabet "abcdefghijklmnopqrstuvwxyz"
 
-  def find(char) do
-    @alphabet
-    case String.split(@alphabet, char, parts: 2) do
+  def find(needle, haystack \\ @alphabet) do
+    case String.split(haystack, needle, parts: 2) do
       [left, _] -> String.length(left)
     end
   end
@@ -26,6 +25,11 @@ defmodule AlphabetUtils do
     @alphabet
     {first,last} = String.split_at(@alphabet,index)
     last <> first
+  end
+
+  def at(index) do
+    @alphabet
+    String.at(@alphabet, index)
   end
 
 end

@@ -1,9 +1,19 @@
 defmodule Alphabetcipher do
-  def main(input,keyword) do
-    trimmed = String.trim(input)
+  def encode(keyword,message) do
+    trimmed = String.downcase(message)
+    |> String.replace(" ","")
     String.length(trimmed)
     |> wrap_keyword(keyword)
-    |> encode(trimmed)
+    |> encode_strings(trimmed)
+
+  end
+
+  def decode(keyword,cipher) do
+    trimmed = String.downcase(cipher)
+    |> String.replace(" ","")
+    String.length(trimmed)
+    |> wrap_keyword(keyword)
+    |> decode_strings(trimmed)
   end
 
   def wrap_keyword(goal_length,keyword) do
@@ -14,16 +24,31 @@ defmodule Alphabetcipher do
     end
   end
 
-  def encode(keyword,message) do
+  def encode_strings(keyword,message) do
     Enum.zip(String.graphemes(keyword),String.graphemes(message))
-    |> Enum.map(&encode_pair/1)
+    |> Enum.map(&encode_chars/1)
+    |> Enum.join
   end
 
-  def encode_pair({char_1,char_2}) do
+  def decode_strings(keyword,message) do
+    Enum.zip(String.graphemes(keyword),String.graphemes(message))
+    |> Enum.map(&decode_chars/1)
+    |> Enum.join
+  end
+
+  def encode_chars({char_1,char_2}) do
     index = AlphabetUtils.find(char_2)
     AlphabetUtils.find(char_1)
     |> AlphabetUtils.wrap
     |> String.at(index)
   end
+
+  def decode_chars({char_1,char_2}) do
+    wrapped_alpha = AlphabetUtils.find(char_1)
+    |> AlphabetUtils.wrap
+    AlphabetUtils.find(char_2,wrapped_alpha)
+    |> AlphabetUtils.at
+  end
+
 
 end
